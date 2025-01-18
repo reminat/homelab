@@ -1,0 +1,13 @@
+name: Test Runner Auto-Hébergé
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: self-hosted  # Indique que ce job s'exécute sur ton runner
+    steps:
+      - name: Vérification
+        run: echo "Le runner fonctionne parfaitement !"
