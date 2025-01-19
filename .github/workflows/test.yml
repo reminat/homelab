@@ -6,8 +6,13 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: self-hosted  # Indique que ce job s'exécute sur ton runner
+  Copy-Files:
+    runs-on: self-hosted
     steps:
-      - name: Vérification
-        run: echo "Le runner fonctionne parfaitement !"
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Copy files
+        run: |
+          mkdir -p /home/remi/test
+          cp -r README.md /home/remi/test
+
