@@ -7,5 +7,5 @@
 
     - name: copy docker-compose.yml
       copy:
-        src: docker/prod/docker-compose.yml
+        src: ../docker/prod/docker-compose.yml
         dest: /home/remi/docker-compose.yml
