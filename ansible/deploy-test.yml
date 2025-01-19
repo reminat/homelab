@@ -8,7 +8,7 @@
       ansible.builtin.package:
         name: docker-compose-plugin
         state: present
-        
+
     - name: Créer le répertoire pour docker-compose
       ansible.builtin.file:
         path: /opt/docker_app
@@ -27,5 +27,5 @@
         
     - name: Lancer le docker-compose
       ansible.builtin.command:
-        cmd: docker-compose up -d
+        cmd: docker compose up -d
         chdir: /opt/docker_app
