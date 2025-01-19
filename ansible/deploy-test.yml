@@ -4,6 +4,11 @@
   roles:
     - role: geerlingguy.docker
   tasks:
+    - name: Installer Docker Compose v2
+      ansible.builtin.package:
+        name: docker-compose-plugin
+        state: present
+        
     - name: Créer le répertoire pour docker-compose
       ansible.builtin.file:
         path: /opt/docker_app
