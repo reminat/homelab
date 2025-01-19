@@ -1,1 +1,7 @@
-name: test
+version: "3.9"
+
+services:
+  test_container:
+    image: alpine:latest
+    container_name: test_alpine
+    command: sh -c "while true; do echo 'Hello, Docker!'; sleep 5; done"

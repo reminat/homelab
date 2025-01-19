@@ -1,7 +1,26 @@
 - name: Docker deployment
   hosts: vm_test
+  become: yes
+  roles:
+    - role: geerlingguy.docker
   tasks:
-    - name: copy docker-compose.yml
-      copy:
+    - name: Créer le répertoire pour docker-compose
+      ansible.builtin.file:
+        path: /opt/docker_app
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Copier le fichier docker-compose.yml
+      ansible.builtin.copy:
         src: ../docker/test/docker-compose.yml
-        dest: /home/remi/docker-compose.yml
+        dest: /opt/docker_app/docker-compose.yml
+        owner: root
+        group: root
+        mode: '0644'
+        
+    - name: Lancer le docker-compose
+      ansible.builtin.command:
+        cmd: docker-compose up -d
+        chdir: /opt/docker_app
