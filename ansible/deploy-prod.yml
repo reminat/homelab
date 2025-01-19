@@ -1,5 +1,5 @@
 - name: Docker deployment
-  hosts: test
+  hosts: vm_prod
   tasks:
     - name: copy docker-compose.yml
       copy:
