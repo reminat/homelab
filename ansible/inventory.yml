@@ -1,0 +1,15 @@
+all:
+  children:
+    test:
+      hosts:
+        vm_test:
+          ansible_host: 192.168.1.102
+          ansible_user: remi
+          ansible_ssh_private_key_file: ~/.ssh/vm-ansible-102-vm-ubuntu-docker-test-key
+
+    production:
+      hosts:
+        vm_prod:
+          ansible_host: 192.168.1.100
+          ansible_user: remi
+          ansible_ssh_private_key_file: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key

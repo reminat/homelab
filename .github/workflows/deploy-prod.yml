@@ -1,0 +1,16 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Copy-Files:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: run ansible playbook
+        run: |
+          ansible-playbook -i ansible/inventory.yml ansible/deploy-prod.yml

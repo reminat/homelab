@@ -1,9 +1,9 @@
-name: Test Runner Auto-Hébergé
+name: Deployment
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   Copy-Files:
@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Copy files
+      - name: run ansible playbook
         run: |
-          mkdir -p /home/remi/test
-          cp -r README.md /home/remi/test
-
+          ansible-playbook -i ansible/inventory.yml ansible/deploy-test.yml
