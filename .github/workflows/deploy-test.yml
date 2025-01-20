@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Fournir le mot de passe Vault
+        run: echo "${{ secrets.VAULT_PASSWORD }}" > ~/.vault_pass
       - name: run ansible playbook
         run: |
-          ansible-playbook -i ansible/inventory.yml ansible/deploy-test.yml
+          ansible-playbook -i ansible/inventory.yml ansible/deploy-test.yml --vault-password-file ~/.vault_pass
