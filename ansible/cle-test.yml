@@ -7,5 +7,5 @@
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
         dest: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key
-        owner: "{{ ansible_user }}"
+        owner: "remi"
         mode: "0600"
