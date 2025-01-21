@@ -6,6 +6,6 @@
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
-        dest: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key
+        dest: ~/.ssh/vm-ansible-102-vm-ubuntu-docker-test-key
         owner: "remi"
         mode: "0600"
