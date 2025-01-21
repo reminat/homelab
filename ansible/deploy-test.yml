@@ -14,12 +14,6 @@
   roles:
     - role: geerlingguy.docker
   tasks:
-    - name: Enregistrer la clé privée
-      ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
-        dest: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key
-        owner: "{{ ansible_user }}"
-        mode: "0600"
     - name: Installer Docker Compose v2
       ansible.builtin.package:
         name: docker-compose-plugin
