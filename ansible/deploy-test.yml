@@ -1,16 +1,6 @@
 - name: Docker deployment
   hosts: vm_test
   become: yes
-  vars_files:
-    - secret.yml
-  pre_tasks:
-    - name: Enregistrer la clé privée
-      ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
-        dest: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key
-        owner: "{{ ansible_user }}"
-        mode: "0600"
-      delegate_to: localhost
   roles:
     - role: geerlingguy.docker
   tasks:

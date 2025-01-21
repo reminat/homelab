@@ -15,4 +15,7 @@ jobs:
         run: echo "${{ secrets.VAULT_PASSWORD }}" > ~/.vault_pass
       - name: run ansible playbook
         run: |
-          ansible-playbook -i ansible/inventory.yml ansible/deploy-test.yml --vault-password-file ~/.vault_pass
+          ansible-playbook ansible/cle-test.yml --vault-password-file ~/.vault_pass
+      - name: run ansible playbook
+        run: |
+          ansible-playbook -i ansible/inventory.yml ansible/deploy-test.yml
