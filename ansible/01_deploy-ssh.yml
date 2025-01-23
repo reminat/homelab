@@ -1,11 +1,11 @@
 - name: Docker deployment
   hosts: localhost
   vars_files:
-    - secret.yml
+    - "group_vars/secret-{{ env }}.yml"
   tasks:
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
-        dest: ~/.ssh/vm-ansible-102-vm-ubuntu-docker-test-key
+        dest: "{{ playbook_dir }}/keys/{{ env }}-private-key"
         owner: "remi"
         mode: "0600"

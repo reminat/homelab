@@ -1,0 +1,41 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  Copy-Files:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fournir le mot de passe Vault
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            echo "${{ secrets.VAULT_PASSWORD }}" > ~/.vault_pass;
+          elif [ "${{ github.ref_name }}" == "develop" ]; then
+            echo "${{ secrets.VAULT_PASSWORD_TEST }}" > ~/.vault_pass;
+          else
+            echo "Branche non prise en charge pour fournir le mot de passe Vault.";
+            exit 1;
+          fi
+
+      - name: Run ansible playbook deployment
+        env:
+          env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
+        run: |
+          ansible-playbook ansible/00_deploy.yml --vault-password-file ~/.vault_pass
+
+      - name: Clean up Vault password file
+        if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
+        run: |
+          if [ -f ~/.vault_pass ]; then
+            rm ~/.vault_pass;
+            echo "Vault password file has been deleted.";
+          else
+            echo "No Vault password file found to delete.";
+          fi
