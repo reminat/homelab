@@ -3,11 +3,11 @@
   tasks:
     - block:
         - name: Exécuter le playbook de clé SSH
-          ansible.builtin.include_tasks: 01_deploy-ssh.yml
+          ansible.builtin.import_playbook: 01_deploy-ssh.yml
 
         - name: Exécuter le playbook de déploiement Docker
-          ansible.builtin.include_tasks: 02_deploy-docker.yml
+          ansible.builtin.import_playbook: 02_deploy-docker.yml
       rescue:
         - name: Échec détecté, effectuer un nettoyage global
-          ansible.builtin.include_tasks: 99_cleanup.yml
+          ansible.builtin.import_playbook: 99_cleanup.yml
           
