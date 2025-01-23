@@ -1,5 +1,5 @@
 - name: Orchestration de déploiement
-  hosts: localhost
+  hosts: all
   tasks:
     - block:
         - name: Exécuter le playbook de clé SSH
