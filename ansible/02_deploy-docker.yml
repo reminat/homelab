@@ -60,14 +60,6 @@
         state: present
       when: docker_compose_installed.failed
 
-    - name: Créer le répertoire pour les volumes docker
-      ansible.builtin.file:
-        path: ~/docker-volumes
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
-
     - name: Créer le répertoire pour docker-compose
       ansible.builtin.file:
         path: /opt/docker_app
@@ -76,13 +68,13 @@
         group: root
         mode: '0755'
 
-    - name: Copier le fichier docker-compose.yml
-      ansible.builtin.copy:
-        src: ../docker/docker-compose.yml
+    - name: Générer le fichier docker-compose.yml depuis le template
+      ansible.builtin.template:
+        src: templates/docker-compose.yml.j2
         dest: /opt/docker_app/docker-compose.yml
         owner: root
         group: root
-        mode: '0644'
+        mode: "0644"
 
     - name: Lancer le docker-compose
       ansible.builtin.command:
