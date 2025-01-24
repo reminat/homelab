@@ -10,11 +10,11 @@ jobs:
   Copy-Files:
     runs-on: self-hosted
     env:
-      env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
+      envName: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
     steps:
       - name: Debug - Afficher l'environnement
         run: |
-          echo "Environnement utilisé : ${env}"
+          echo "Environnement utilisé : ${envName}"
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,16 +32,16 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "envName=${{ env }}"
+          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "envName=${{ envName }}"
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -l ${{ env }} -e "envName=${{ env }}"
+          ansible-playbook ansible/02_deploy-docker.yml -l ${{ envName }} -e "envName=${{ envName }}"
 
       # - name: Clean up (99_cleanup)
       #   if: always() 
       #   run: |
-      #     ansible-playbook ansible/99_cleanup.yml -e "envName=${{ env }}"
+      #     ansible-playbook ansible/99_cleanup.yml -e "envName=${{ envName }}"
 
       # - name: Clean up Vault password file
       #   if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
