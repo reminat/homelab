@@ -32,7 +32,7 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "envName=test"
+          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
