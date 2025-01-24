@@ -6,20 +6,3 @@
     - name: Afficher toutes les variables disponibles
       debug:
         var: vars
-    - name: Afficher envName
-      debug:
-        msg: "group_vars/secret-test.yml : {{ group_names }}"
-    - name: Afficher playbook_dir
-      debug:
-        msg: "La variable playbook_dir est : {{ playbook_dir }}"
-    - name: Afficher ansible_private_key
-      debug:
-        msg: "La variable ansible_private_key est : {{ ansible_private_key }}"
-
-
-    - name: Enregistrer la clé privée
-      ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
-        dest: "{{ playbook_dir }}/keys/test-private-key"
-        owner: "remi"
-        mode: "0600"
