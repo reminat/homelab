@@ -36,7 +36,7 @@ jobs:
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -l test -e "envName=$ENV_NAME"
+          ansible-playbook ansible/02_deploy-docker.yml -i inventory.yml -l test -e "envName=$ENV_NAME"
 
       # - name: Clean up (99_cleanup)
       #   if: always() 

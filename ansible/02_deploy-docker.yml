@@ -1,8 +1,8 @@
 - name: Docker deployment
   hosts: all
   become: yes
-  roles:
-    - role: geerlingguy.docker
+  # roles:
+  #   - role: geerlingguy.docker
   tasks:
     - name: Debug des hôtes ciblés
       debug:
