@@ -39,17 +39,17 @@ jobs:
         run: |
           ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME
 
-      # - name: Clean up (99_cleanup)
-      #   if: always() 
-      #   run: |
-      #     ansible-playbook ansible/99_cleanup.yml
+      - name: Clean up (99_cleanup)
+        if: always() 
+        run: |
+          ansible-playbook ansible/99_cleanup.yml
 
-      # - name: Clean up Vault password file
-      #   if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
-      #   run: |
-      #     if [ -f ~/.vault_pass ]; then
-      #       rm ~/.vault_pass;
-      #       echo "Vault password file has been deleted.";
-      #     else
-      #       echo "No Vault password file found to delete.";
-      #     fi
+      - name: Clean up Vault password file
+        if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
+        run: |
+          if [ -f ~/.vault_pass ]; then
+            rm ~/.vault_pass;
+            echo "Vault password file has been deleted.";
+          else
+            echo "No Vault password file found to delete.";
+          fi
