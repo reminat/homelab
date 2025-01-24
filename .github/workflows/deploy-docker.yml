@@ -12,6 +12,10 @@ jobs:
     env:
       env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
     steps:
+      - name: Debug - Afficher l'environnement
+        run: |
+          echo "Environnement utilisé : ${env}"
+          
       - name: Checkout code
         uses: actions/checkout@v3
 
