@@ -9,6 +9,9 @@
     - name: Afficher env
       debug:
         msg: "La variable env est : {{ env }}"
+    - name: Afficher envi
+      debug:
+        msg: "La variable envi est : {{ envi }}"
     - name: Afficher playbook_dir
       debug:
         msg: "La variable playbook_dir est : {{ playbook_dir }}"
