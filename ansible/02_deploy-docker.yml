@@ -9,9 +9,6 @@
     nfs_server: "{{ ip_nas }}"
     nfs_share: /volume1/docker-volumes-{{ env }}
     nfs_mount_point: /mnt/nfs
-    nfs_directories:
-      - /mnt/nfs/portainer-data
-      - /mnt/nfs/nodered-data
 
   tasks:
     - name: Mettre à jour les dépôts APT
