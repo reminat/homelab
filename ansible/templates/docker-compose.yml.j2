@@ -20,10 +20,12 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/16
-volumes:
-  portainer-data:
+
+{% for volume in docker_volumes %}
+  {{ volume }}:
     driver: local
     driver_opts:
       type: nfs
       o: "addr={{ ip_nas }},rw"
-      device: :/volume1/docker-volumes-test/portainer-data
+      device: ":/volume1/docker-volumes-{{ env }}/{{ volume }}"
+{% endfor %}
