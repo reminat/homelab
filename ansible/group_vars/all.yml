@@ -2,3 +2,4 @@ ip_nas: 192.168.1.200
 docker_volumes:
   - portainer-data
   - nodered-data
+  - homeassistant-config
