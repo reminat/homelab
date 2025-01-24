@@ -6,7 +6,6 @@
     - name: Afficher env environnement
       debug:
         msg: "La variable env environnement est : {{ lookup('env', 'env') }}"
-  tasks:
     - name: Afficher env
       debug:
         msg: "La variable env est : {{ env }}"
