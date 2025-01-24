@@ -6,6 +6,9 @@
   roles:
     - role: geerlingguy.docker
   tasks:
+    - name: show env value
+      debug:
+        var: env
     - name: Vérifier si Docker Compose est installé
       ansible.builtin.command:
         cmd: docker compose version
