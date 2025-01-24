@@ -4,6 +4,9 @@
   roles:
     - role: geerlingguy.docker
   tasks:
+    - name: Debug des hôtes ciblés
+      debug:
+        msg: "Hôte actuel : {{ inventory_hostname }}"
     - name: Vérifier si Docker Compose est installé
       ansible.builtin.command:
         cmd: docker compose version
