@@ -21,6 +21,7 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 
+volumes:
 {% for volume in docker_volumes %}
   {{ volume }}:
     driver: local
