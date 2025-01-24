@@ -3,6 +3,9 @@
   vars_files:
     - "group_vars/secret-{{ envName }}.yml"
   tasks:
+    - name: Debug des hôtes ciblés
+      debug:
+        msg: "Hôte actuel : {{ inventory_hostname }}"
     - name: Afficher envName
       debug:
         msg: "group_vars/secret-{{ envName }}.yml"
