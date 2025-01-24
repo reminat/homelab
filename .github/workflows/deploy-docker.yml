@@ -38,7 +38,7 @@ jobs:
       - name: Clean up (99_cleanup)
         if: always() 
         run: |
-          ansible-playbook ansible/99_cleanup.yml -e "env=$ENV_NAME"
+          ansible-playbook ansible/99_cleanup.yml
 
       - name: Clean up Vault password file
         if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
