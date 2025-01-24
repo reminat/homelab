@@ -2,14 +2,13 @@ all:
   children:
     test:
       hosts:
-        vm_test:
+        102-vm-ubuntu-docker-test:
           ansible_host: 192.168.1.102
           ansible_user: remi
-          ansible_ssh_private_key_file: ~/.ssh/vm-ansible-102-vm-ubuntu-docker-test-key
-
-    production:
+          ansible_ssh_private_key_file: "{{ playbook_dir }}/{{ env }}-private-key"
+    prod:
       hosts:
-        vm_prod:
+        100-vm-ubuntu-docker:
           ansible_host: 192.168.1.100
           ansible_user: remi
-          ansible_ssh_private_key_file: ~/.ssh/vm-ansible-100-vm-ubuntu-docker-key
+          ansible_ssh_private_key_file: "{{ playbook_dir }}/{{ env }}-private-key"

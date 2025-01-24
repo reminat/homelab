@@ -1,7 +1,0 @@
-- name: Docker deployment
-  hosts: vm_test
-  tasks:
-    - name: copy docker-compose.yml
-      copy:
-        src: ../docker/test/docker-compose.yml
-        dest: /home/remi/docker-compose.yml

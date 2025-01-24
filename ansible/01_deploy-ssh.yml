@@ -1,0 +1,11 @@
+- name: Docker deployment
+  hosts: localhost
+  vars_files:
+    - "group_vars/secret-{{ env }}.yml"
+  tasks:
+    - name: Enregistrer la clé privée
+      ansible.builtin.copy:
+        content: "{{ ansible_private_key }}"
+        dest: "{{ playbook_dir }}/{{ env }}-private-key"
+        owner: "remi"
+        mode: "0600"

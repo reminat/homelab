@@ -1,0 +1,45 @@
+- name: Docker deployment
+  hosts: all
+  become: yes
+  # roles:
+  #   - role: geerlingguy.docker
+  tasks:
+    - name: Vérifier si Docker Compose est installé
+      ansible.builtin.command:
+        cmd: docker compose version
+      ignore_errors: yes
+      register: docker_compose_installed
+    - name: Installer Docker Compose v2
+      ansible.builtin.package:
+        name: docker-compose-plugin
+        state: present
+      when: docker_compose_installed.failed
+
+    - name: Créer le répertoire pour les volumes docker
+      ansible.builtin.file:
+        path: ~/docker-volumes
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Créer le répertoire pour docker-compose
+      ansible.builtin.file:
+        path: /opt/docker_app
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Copier le fichier docker-compose.yml
+      ansible.builtin.copy:
+        src: ../docker/docker-compose.yml
+        dest: /opt/docker_app/docker-compose.yml
+        owner: root
+        group: root
+        mode: '0644'
+        
+    - name: Lancer le docker-compose
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: /opt/docker_app
