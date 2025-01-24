@@ -32,11 +32,11 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml -i ansible/inventory.yml -l test,localhost --vault-password-file ~/.vault_pass
+          ansible-playbook ansible/01_deploy-ssh.yml -i ansible/inventory.yml --vault-password-file ~/.vault_pass -e "envName=$ENV_NAME"
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l test
+          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME
 
       # - name: Clean up (99_cleanup)
       #   if: always() 
