@@ -23,11 +23,18 @@
         name: nfs-common
         state: present
 
+    - name: Créer le point de montage local si nécessaire
+      ansible.builtin.file:
+        path: "{{ nfs_mount_point }}"
+        state: directory
+        mode: "0755"
+
     - name: Vérifier si le partage NFS est monté
-      ansible.builtin.command:
-        cmd: mount | grep -q "{{ nfs_mount_point }}"
-      ignore_errors: true
+      ansible.builtin.shell:
+        cmd: "mount | grep '{{ nfs_mount_point }}'"
       register: mount_check
+      failed_when: mount_check.rc not in [0, 1]
+      changed_when: false
 
     - name: Monter le partage NFS si non monté
       ansible.builtin.command:
