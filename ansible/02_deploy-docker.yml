@@ -6,6 +6,14 @@
   roles:
     - role: geerlingguy.docker
   tasks:
+    - name: Mettre à jour les dépôts APT
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Installer nfs-common
+      ansible.builtin.apt:
+        name: nfs-common
+        state: present
     - name: Vérifier si Docker Compose est installé
       ansible.builtin.command:
         cmd: docker compose version
