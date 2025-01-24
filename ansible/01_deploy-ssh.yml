@@ -3,6 +3,9 @@
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
   tasks:
+    - name: show path
+      ansible.builtin.debug:
+        msg: "{{ playbook_dir }}/{{ env }}-private-key"
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
