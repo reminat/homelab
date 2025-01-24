@@ -1,7 +1,14 @@
 - name: Docker deployment
   hosts: localhost
   tasks:
-    - name: Supprime la clé privée
+    - name: Trouver toutes les clés privées
+      ansible.builtin.find:
+        paths: "{{ playbook_dir }}"
+        patterns: "*-private-key"
+      register: private_keys
+
+    - name: Supprimer les clés privées trouvées
       ansible.builtin.file:
-        path: "{{ playbook_dir }}/*-private-key"
+        path: "{{ item.path }}"
         state: absent
+      loop: "{{ private_keys.files }}"
