@@ -1,4 +1,4 @@
-name: Deployment
+name: Docker deployment
 
 on:
   push:
@@ -9,6 +9,8 @@ on:
 jobs:
   Copy-Files:
     runs-on: self-hosted
+    env:
+      env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,8 +31,6 @@ jobs:
           ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass
 
       - name: Run ansible playbook (02_deploy-docker)
-        env:
-          env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
         run: |
           ansible-playbook ansible/02_deploy-docker.yml
 
