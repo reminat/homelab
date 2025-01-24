@@ -41,7 +41,7 @@ jobs:
           ansible-playbook ansible/99_cleanup.yml -l localhost
 
       - name: Clean up Vault password file
-        if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
+        if: always()  
         run: |
           if [ -f .vault_pass ]; then
             rm .vault_pass;
