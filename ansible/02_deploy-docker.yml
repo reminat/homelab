@@ -25,15 +25,14 @@
 
     - name: Vérifier si le partage NFS est monté
       ansible.builtin.command:
-        cmd: mount | grep "{{ nfs_mount_point }}"
-        warn: false
+        cmd: mount | grep -q "{{ nfs_mount_point }}"
+      ignore_errors: true
       register: mount_check
-      failed_when: mount_check.rc not in [0, 1]
 
     - name: Monter le partage NFS si non monté
       ansible.builtin.command:
         cmd: mount -t nfs {{ nfs_server }}:{{ nfs_share }} {{ nfs_mount_point }}
-      when: mount_check.rc == 1
+      when: mount_check.rc != 0
 
     - name: Créer les répertoires sur le partage NFS
       ansible.builtin.file:
