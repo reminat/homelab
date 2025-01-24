@@ -1,1 +1,1 @@
-env: lookup('env', 'env')
+env: 'test'
