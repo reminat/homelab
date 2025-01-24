@@ -5,7 +5,7 @@
   tasks:
     - name: Afficher envName
       debug:
-        msg: "La variable envName est : {{ envName }}"
+        msg: "group_vars/secret-{{ envName }}.yml"
     - name: Afficher playbook_dir
       debug:
         msg: "La variable playbook_dir est : {{ playbook_dir }}"
