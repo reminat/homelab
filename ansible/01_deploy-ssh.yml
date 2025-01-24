@@ -1,11 +1,14 @@
 - name: Docker deployment
   hosts: localhost
   vars_files:
-    - "group_vars/secret-{{ envName }}.yml"
+    - "group_vars/secret-test.yml"
   tasks:
+    - name: Afficher toutes les variables disponibles
+      debug:
+        var: vars
     - name: Afficher envName
       debug:
-        msg: "group_vars/secret-{{ envName }}.yml"
+        msg: "group_vars/secret-test.yml : {{ group_names }}"
     - name: Afficher playbook_dir
       debug:
         msg: "La variable playbook_dir est : {{ playbook_dir }}"
@@ -17,6 +20,6 @@
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
-        dest: "{{ playbook_dir }}/keys/{{ envName }}-private-key"
+        dest: "{{ playbook_dir }}/keys/test-private-key"
         owner: "remi"
         mode: "0600"
