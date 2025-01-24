@@ -12,9 +12,6 @@
     - name: Afficher playbook_dir
       debug:
         msg: "La variable playbook_dir est : {{ playbook_dir }}"
-    - name: Afficher ansible_private_key
-      debug:
-        msg: "La variable ansible_private_key est : {{ ansible_private_key }}"
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
