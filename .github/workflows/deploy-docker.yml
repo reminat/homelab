@@ -24,11 +24,20 @@ jobs:
             exit 1;
           fi
 
-      - name: Run ansible playbook deployment
+      - name: Run ansible playbook (01_deploy-ssh)
+        run: |
+          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass
+
+      - name: Run ansible playbook (02_deploy-docker)
         env:
           env: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
         run: |
-          ansible-playbook ansible/00_deploy.yml --vault-password-file ~/.vault_pass
+          ansible-playbook ansible/02_deploy-docker.yml
+
+      - name: Clean up (99_cleanup)
+        if: always() 
+        run: |
+          ansible-playbook ansible/99_cleanup.yml
 
       - name: Clean up Vault password file
         if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
