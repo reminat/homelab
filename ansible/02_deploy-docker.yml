@@ -41,12 +41,12 @@
         cmd: mount -t nfs {{ nfs_server }}:{{ nfs_share }} {{ nfs_mount_point }}
       when: mount_check.rc != 0
 
-    - name: Créer les répertoires sur le partage NFS
+    - name: Créer les répertoires pour chaque volume dans le partage NFS
       ansible.builtin.file:
-        path: "{{ item }}"
+        path: "{{ nfs_mount_point }}/{{ item }}"
         state: directory
         mode: "0755"
-      with_items: "{{ nfs_directories }}"
+      with_items: "{{ docker_volumes }}"
 
     - name: Vérifier si Docker Compose est installé
       ansible.builtin.command:
