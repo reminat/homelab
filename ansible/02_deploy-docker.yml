@@ -4,6 +4,9 @@
   # roles:
   #   - role: geerlingguy.docker
   tasks:
+    - name: Afficher toutes les variables disponibles
+      debug:
+        var: vars
     - name: Debug des hôtes ciblés
       debug:
         msg: "Hôte actuel : {{ inventory_hostname }}"
