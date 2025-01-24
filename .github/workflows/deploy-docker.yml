@@ -10,11 +10,11 @@ jobs:
   Copy-Files:
     runs-on: self-hosted
     env:
-      envName: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
+      ENV_NAME: ${{ github.ref_name == 'develop' && 'test' || 'prod' }}
     steps:
       - name: Debug - Afficher l'environnement
         run: |
-          echo "Environnement utilisé : ${env.envName}"
+          echo "Environnement utilisé : $ENV_NAME"
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,11 +32,11 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "envName=${{ env.envName }}"
+          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "envName=${{ ENV_NAME }}"
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -l ${{ env.envName }} -e "envName=${{ env.envName }}"
+          ansible-playbook ansible/02_deploy-docker.yml -l ${{ ENV_NAME }} -e "envName=${{ ENV_NAME }}"
 
       # - name: Clean up (99_cleanup)
       #   if: always() 
