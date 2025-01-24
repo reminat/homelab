@@ -1,4 +1,4 @@
-- name: Docker deployment
+- name: Dockerdeployment
   hosts: localhost
   vars_files:
     - "group_vars/secret-test.yml"
