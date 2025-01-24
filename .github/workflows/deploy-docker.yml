@@ -47,5 +47,5 @@ jobs:
       - name: Clean up _work directory
         if: always()
         run: |
-          rm -rf ${{ github.workspace }}/homelab
+          rm -rf ${{ github.workspace }}
           echo "Le répertoire _work a été nettoyé."
