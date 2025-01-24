@@ -9,7 +9,6 @@
     - name: Mettre à jour les dépôts APT
       ansible.builtin.apt:
         update_cache: yes
-
     - name: Installer nfs-common
       ansible.builtin.apt:
         name: nfs-common
@@ -24,7 +23,6 @@
         name: docker-compose-plugin
         state: present
       when: docker_compose_installed.failed
-
     - name: Créer le répertoire pour les volumes docker
       ansible.builtin.file:
         path: ~/docker-volumes
@@ -40,7 +38,6 @@
         owner: root
         group: root
         mode: '0755'
-
     - name: Copier le fichier docker-compose.yml
       ansible.builtin.copy:
         src: ../docker/docker-compose.yml
@@ -48,7 +45,6 @@
         owner: root
         group: root
         mode: '0644'
-        
     - name: Lancer le docker-compose
       ansible.builtin.command:
         cmd: docker compose up -d
