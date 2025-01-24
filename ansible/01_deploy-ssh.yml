@@ -3,6 +3,9 @@
   vars_files:
     - "group_vars/secret-{{ envName }}.yml"
   tasks:
+    - name: Afficher vars
+      debug:
+        var: vars
     - name: Afficher envName
       debug:
         msg: "group_vars/secret-{{ envName }}.yml"
