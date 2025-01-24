@@ -15,7 +15,7 @@ jobs:
       - name: Debug - Afficher l'environnement
         run: |
           echo "Environnement utilisé : ${env}"
-          
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -32,16 +32,16 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass
+          ansible-playbook ansible/01_deploy-ssh.yml --vault-password-file ~/.vault_pass -e "env=${{ env }}"
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml
+          ansible-playbook ansible/02_deploy-docker.yml -e "env=${{ env }}"
 
       - name: Clean up (99_cleanup)
         if: always() 
         run: |
-          ansible-playbook ansible/99_cleanup.yml
+          ansible-playbook ansible/99_cleanup.yml -e "env=${{ env }}"
 
       - name: Clean up Vault password file
         if: always()  # Exécuter cette étape même en cas d'échec des étapes précédentes
