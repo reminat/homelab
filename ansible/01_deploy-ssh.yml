@@ -3,21 +3,9 @@
   vars_files:
     - "group_vars/secret-{{ envName }}.yml"
   tasks:
-    - name: Afficher env environnement
-      debug:
-        msg: "La variable env environnement est : {{ lookup('env', 'env') }}"
-    - name: Afficher env
-      debug:
-        msg: "La variable env est : {{ env }}"
     - name: Afficher envName
       debug:
         msg: "La variable envName est : {{ envName }}"
-    - name: Afficher group_names
-      debug:
-        msg: "La variable group_names est : {{ group_names }}"
-    - name: Afficher group
-      debug:
-        msg: "La variable group_names est : {{ group }}"
     - name: Afficher playbook_dir
       debug:
         msg: "La variable playbook_dir est : {{ playbook_dir }}"
