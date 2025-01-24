@@ -1,7 +1,7 @@
 - name: Docker deployment
   hosts: localhost
   vars_files:
-    - "group_vars/secret-{{ env }}.yml"
+    - "group_vars/secret-{{ envName }}.yml"
   tasks:
     - name: Afficher env environnement
       debug:
@@ -9,9 +9,9 @@
     - name: Afficher env
       debug:
         msg: "La variable env est : {{ env }}"
-    - name: Afficher envi
+    - name: Afficher envName
       debug:
-        msg: "La variable envi est : {{ envi }}"
+        msg: "La variable envName est : {{ envName }}"
     - name: Afficher group_names
       debug:
         msg: "La variable group_names est : {{ group_names }}"
@@ -29,6 +29,6 @@
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
-        dest: "{{ playbook_dir }}/keys/{{ env }}-private-key"
+        dest: "{{ playbook_dir }}/keys/{{ envName }}-private-key"
         owner: "remi"
         mode: "0600"
