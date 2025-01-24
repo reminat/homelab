@@ -13,10 +13,6 @@ jobs:
     name: Deploy Docker
     runs-on: self-hosted
     steps:
-      - name: Debug - Afficher l'environnement
-        run: |
-          echo "Environnement utilisé : $ENV_NAME"
-
       - name: Checkout code
         uses: actions/checkout@v3
 
