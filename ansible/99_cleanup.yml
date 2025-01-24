@@ -1,9 +1,14 @@
 - name: Docker deployment
   hosts: localhost
-  vars_files:
-    - "group_vars/secret-{{ env }}.yml"
   tasks:
-    - name: Enregistrer la clé privée
+    - name: Trouver toutes les clés privées
+      ansible.builtin.find:
+        paths: "{{ playbook_dir }}"
+        patterns: "*-private-key"
+      register: private_keys
+
+    - name: Supprimer les clés privées trouvées
       ansible.builtin.file:
-        path: "{{ playbook_dir }}/{{ env }}-private-key"
+        path: "{{ item.path }}"
         state: absent
+      loop: "{{ private_keys.files }}"
