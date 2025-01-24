@@ -10,7 +10,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ~/docker-volumes/portainer-data:/data
+      - portainer-data:/data
     ports:
       - 9443:9443
     networks:
@@ -22,3 +22,10 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/16
+volumes:
+  portainer-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.200,rw
+      device: :/volume1/docker-volumes-test/portainer-data
