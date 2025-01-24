@@ -16,10 +16,9 @@
       debug:
         msg: "La variable ansible_private_key est : {{ ansible_private_key }}"
 
-
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
-        dest: "{{ playbook_dir }}/keys/{{ envName }}-private-key"
+        dest: "{{ playbook_dir }}/{{ envName }}-private-key"
         owner: "remi"
         mode: "0600"

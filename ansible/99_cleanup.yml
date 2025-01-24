@@ -5,5 +5,5 @@
   tasks:
     - name: Enregistrer la clé privée
       ansible.builtin.file:
-        path: "{{ playbook_dir }}/keys/{{ envName }}-private-key"
+        path: "{{ playbook_dir }}/{{ envName }}-private-key"
         state: absent
