@@ -8,10 +8,10 @@
         msg: "La variable env est : {{ lookup('env', 'env') }}"
     - name: Afficher playbook_dir
       debug:
-        msg: "La variable playbook_dir est : {{ lookup('env', 'playbook_dir') }}"
+        msg: "La variable playbook_dir est : {{ playbook_dir }}"
     - name: Afficher ansible_private_key
       debug:
-        msg: "La variable ansible_private_key est : {{ lookup('env', 'ansible_private_key') }}"
+        msg: "La variable ansible_private_key est : {{ ansible_private_key }}"
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
