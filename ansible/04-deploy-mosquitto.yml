@@ -17,13 +17,11 @@
         owner: root
         group: root
         mode: "0644"
-        
-    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans le fichier passwd
+
+    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
       ansible.builtin.command:
-        cmd: mosquitto_passwd -b {{ mosquitto_passwd_file }} {{ mosquitto_user }} {{ mosquitto_password }}
-      args:
-        creates: "{{ mosquitto_passwd_file }}"
-        
+        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/passwd {{ mosquitto_user }} {{ mosquitto_password }}    
+            
     - name: Redémarrer le conteneur Docker mosquitto
       ansible.builtin.command:
         cmd: docker restart mosquitto
