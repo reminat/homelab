@@ -6,3 +6,8 @@ docker_volumes:
   - portainer-data
   - nodered-data
   - homeassistant-config
+  - mosquitto-data
+  - mosquitto-log
+  - mosquitto-config
+  - z2mqtt-data
+  - z2mqtt-udev
