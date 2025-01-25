@@ -29,14 +29,14 @@ services:
     image: nodered/node-red:4.0.8-22
     container_name: nodered
     volumes:
-      - /home/remi/nodered:/data:rw
+      - nodered-data:/data:rw
     environment:
       - TZ=Europe/Amsterdam
     ports:
       - "1880:1880"
     networks:
       - homelab_network
-      
+
 networks:
   homelab_network:
     driver: bridge
