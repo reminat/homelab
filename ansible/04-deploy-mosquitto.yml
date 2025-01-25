@@ -18,19 +18,12 @@
         group: root
         mode: "0644"
         
-    - name: Créer le fichier passwd s'il n'existe pas
-      ansible.builtin.file:
-        path: "{{ mosquitto_passwd_file }}"
-        state: touch
-        owner: root
-        group: root
-        mode: "0644"
-
     - name: Ajouter ou mettre à jour le mot de passe utilisateur dans le fichier passwd
       ansible.builtin.command:
         cmd: mosquitto_passwd -b {{ mosquitto_passwd_file }} {{ mosquitto_user }} {{ mosquitto_password }}
       args:
         creates: "{{ mosquitto_passwd_file }}"
+        
     - name: Redémarrer le conteneur Docker mosquitto
       ansible.builtin.command:
         cmd: docker restart mosquitto
