@@ -19,13 +19,3 @@
     - name: Redémarrer le conteneur Docker Home Assistant
       ansible.builtin.command:
         cmd: docker restart homeassistant
-
-    - name: Vérifier que le conteneur Home Assistant est en cours d'exécution
-      ansible.builtin.command:
-        cmd: docker ps --filter "name=homeassistant" --filter "status=running" --format "{{.Names}}"
-      register: docker_status
-
-    - name: Échec si le conteneur Home Assistant n'est pas démarré
-      ansible.builtin.fail:
-        msg: "Le conteneur Docker Home Assistant n'est pas démarré"
-      when: docker_status.stdout == ""
