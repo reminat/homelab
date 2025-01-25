@@ -37,7 +37,7 @@ jobs:
 
       - name: Run ansible playbook (03-deploy-homeassistant)
         run: |
-          ansible-playbook ansible/03-deploy-homeassistant.yml -l localhost -e "env=$ENV_NAME" --vault-password-file .vault_pass -vvv
+          ansible-playbook ansible/03-deploy-homeassistant.yml -l localhost -e "env=$ENV_NAME" --vault-password-file .vault_pass -vvvv
 
       - name: Clean up (99_cleanup)
         if: always() 

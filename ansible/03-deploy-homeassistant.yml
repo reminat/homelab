@@ -1,5 +1,7 @@
 - name: Docker Home Assistant
   hosts: localhost
+  vars:
+    ansible_connection: local
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
   become: yes
@@ -20,7 +22,7 @@
         owner: root
         group: root
         mode: "0644"
-        
+
     - name: Redémarrer le service Home Assistant
       ansible.builtin.service:
         name: home-assistant
