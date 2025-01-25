@@ -7,8 +7,8 @@
   become: yes
 
   tasks:
-    - name: Importer les tâches pour le montage NFS
-      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+    # - name: Importer les tâches pour le montage NFS
+    #   ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
 
     - name: Arrêter le service Home Assistant
       ansible.builtin.service:
