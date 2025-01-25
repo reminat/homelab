@@ -1,0 +1,17 @@
+- name: Docker Home Assistant
+  hosts: localhost
+  vars:
+    nfs_server: "{{ ip_nas }}"
+    nfs_share: /volume1/docker-volumes-{{ env }}
+    nfs_mount_point: /mnt/nfs
+
+  tasks:
+    - name: Déployer le fichier configuration.yaml
+      ansible.builtin.copy:
+        src: templates/configuration.yaml.j2
+        dest: /path/to/homeassistant/configuration.yaml
+        owner: root
+        group: root
+        mode: "0644"
+        backup: yes
+      notify: Restart Home Assistant
