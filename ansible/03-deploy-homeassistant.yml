@@ -1,5 +1,7 @@
 - name: Docker Home Assistant
   hosts: localhost
+  vars_files:
+    - "group_vars/secret-{{ env }}.yml"
   become: yes
 
   tasks:
