@@ -1,5 +1,6 @@
 - name: Docker Home Assistant
   hosts: localhost
+  become: yes
 
   tasks:
     - name: Importer les tâches pour le montage NFS
