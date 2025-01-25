@@ -53,6 +53,7 @@ services:
 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:2.0.0
+    container_name: zigbee2mqtt
     restart: unless-stopped
     privileged: true
     ports:
@@ -64,7 +65,7 @@ services:
       - TZ=Europe/Paris
     networks:
       - homelab_network
-      
+
 networks:
   homelab_network:
     driver: bridge
