@@ -1,17 +1,14 @@
 - name: Docker Home Assistant
   hosts: localhost
-  vars:
-    nfs_server: "{{ ip_nas }}"
-    nfs_share: /volume1/docker-volumes-{{ env }}
-    nfs_mount_point: /mnt/nfs
 
   tasks:
-    - name: Déployer le fichier configuration.yaml
-      ansible.builtin.copy:
-        src: templates/configuration.yaml.j2
-        dest: /path/to/homeassistant/configuration.yaml
+    - name: Importer les tâches pour le montage NFS
+      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+
+    - name: Générer le fichier docker-compose.yml depuis le template
+      ansible.builtin.template:
+        src: templates/homeassistant/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
         owner: root
         group: root
         mode: "0644"
-        backup: yes
-      notify: Restart Home Assistant

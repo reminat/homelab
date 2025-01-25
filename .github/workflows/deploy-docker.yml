@@ -35,6 +35,10 @@ jobs:
         run: |
           ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
 
+      - name: Run ansible playbook (02_deploy-docker)
+        run: |
+          ansible-playbook ansible/03-deploy-homeassistant.yml -l localhost -l $ENV_NAME
+
       - name: Clean up (99_cleanup)
         if: always() 
         run: |
