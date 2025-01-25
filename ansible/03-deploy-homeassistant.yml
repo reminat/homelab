@@ -2,6 +2,8 @@
   hosts: localhost
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
+  become: yes
+  
   tasks:
     - name: show path
       ansible.builtin.debug:
