@@ -4,7 +4,7 @@
     - "group_vars/secret-{{ env }}.yml"
   become: yes
   vars:
-    mosquitto_passwd_file: "{{ nfs_mount_point }}/mosquitto/configuration-config/passwd"
+    mosquitto_passwd_file: "{{ nfs_mount_point }}/mosquitto-config/passwd"
 
   tasks:
     - name: Importer les tâches pour le montage NFS
@@ -13,7 +13,7 @@
     - name: Générer le fichier mosquitto depuis le template
       ansible.builtin.template:
         src: templates/mosquitto/mosquitto.conf.j2
-        dest: "{{ nfs_mount_point }}/mosquitto/configuration-config/configuration.conf"
+        dest: "{{ nfs_mount_point }}/mosquitto-config/configuration.conf"
         owner: root
         group: root
         mode: "0644"

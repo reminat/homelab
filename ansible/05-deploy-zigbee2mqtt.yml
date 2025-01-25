@@ -1,4 +1,4 @@
-- name: Docker Mosquitto
+- name: Docker Zigbee2mqtt
   hosts: all
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
@@ -11,11 +11,11 @@
     - name: Générer le fichier configuration.yaml depuis le template
       ansible.builtin.template:
         src: templates/zigbee2mqtt/configuration.yaml.j2
-        dest: "{{ nfs_mount_point }}/mosquitto/configuration-config/configuration.yaml"
+        dest: "{{ nfs_mount_point }}/z2mqtt-data/configuration.yaml"
         owner: root
         group: root
         mode: "0644"
         
-    - name: Redémarrer le conteneur Docker mosquitto
+    - name: Redémarrer le conteneur Docker zigbee2mqtt
       ansible.builtin.command:
-        cmd: docker restart mosquitto
+        cmd: docker restart zigbee2mqtt
