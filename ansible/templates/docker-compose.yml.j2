@@ -50,7 +50,11 @@ services:
     restart: unless-stopped
     networks:
       - homelab_network
-
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$SYS/#", "-C", "1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:2.0.0
@@ -66,6 +70,9 @@ services:
       - TZ=Europe/Paris
     networks:
       - homelab_network
+    depends_on:
+      mosquitto:
+        condition: service_healthy
 
 networks:
   homelab_network:

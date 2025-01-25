@@ -18,6 +18,10 @@
         group: root
         mode: "0644"
 
+    - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
+      ansible.builtin.command:
+        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/passwd && chmod 600 /mosquitto/config/passwd"
+
     - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
       ansible.builtin.command:
         cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/passwd {{ mosquitto_user }} {{ mosquitto_password }}    
