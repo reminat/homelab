@@ -1,0 +1,36 @@
+- name: Docker Mosquitto
+  hosts: all
+  vars_files:
+    - "group_vars/secret-{{ env }}.yml"
+  become: yes
+  vars:
+    mosquitto_passwd_file: "{{ nfs_mount_point }}/mosquitto/configuration-config/passwd"
+
+  tasks:
+    - name: Importer les tâches pour le montage NFS
+      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+
+    - name: Générer le fichier mosquitto depuis le template
+      ansible.builtin.template:
+        src: templates/mosquitto/mosquitto.conf.j2
+        dest: "{{ nfs_mount_point }}/mosquitto/configuration-config/configuration.conf"
+        owner: root
+        group: root
+        mode: "0644"
+        
+    - name: Créer le fichier passwd s'il n'existe pas
+      ansible.builtin.file:
+        path: "{{ mosquitto_passwd_file }}"
+        state: touch
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans le fichier passwd
+      ansible.builtin.command:
+        cmd: mosquitto_passwd -b {{ mosquitto_passwd_file }} {{ mosquitto_user }} {{ mosquitto_password }}
+      args:
+        creates: "{{ mosquitto_passwd_file }}"
+    - name: Redémarrer le conteneur Docker mosquitto
+      ansible.builtin.command:
+        cmd: docker restart mosquitto

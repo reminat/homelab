@@ -1,4 +1,4 @@
-- name: Docker Home Assistant
+- name: Docker Mosquitto
   hosts: all
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
@@ -10,12 +10,12 @@
 
     - name: Générer le fichier configuration.yaml depuis le template
       ansible.builtin.template:
-        src: templates/homeassistant/configuration.yaml.j2
-        dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
+        src: templates/zigbee2mqtt/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/mosquitto/configuration-config/configuration.yaml"
         owner: root
         group: root
         mode: "0644"
-
-    - name: Redémarrer le conteneur Docker Home Assistant
+        
+    - name: Redémarrer le conteneur Docker mosquitto
       ansible.builtin.command:
-        cmd: docker restart homeassistant
+        cmd: docker restart mosquitto

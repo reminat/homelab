@@ -1,0 +1,45 @@
+version: 4
+homeassistant:
+  enabled: false
+frontend:
+  enabled: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: {{ mqtt_server }}
+  user: {{ mosquitto_user }}
+  password: {{ mosquitto_password }}
+  keepalive: 60
+  reject_unauthorized: true
+  version: 4
+serial:
+  port: {{ zigbee_bridge }}
+  baudrate: 115200
+  adapter: ezsp
+advanced:
+  network_key:
+    - 99
+    - 141
+    - 95
+    - 24
+    - 154
+    - 30
+    - 39
+    - 73
+    - 192
+    - 38
+    - 179
+    - 97
+    - 191
+    - 70
+    - 176
+    - 157
+  pan_id: 61548
+  ext_pan_id:
+    - 120
+    - 52
+    - 177
+    - 180
+    - 99
+    - 132
+    - 80
+    - 105
