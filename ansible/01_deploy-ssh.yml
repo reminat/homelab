@@ -3,6 +3,9 @@
   vars_files:
     - "group_vars/secret-{{ env }}.yml"
   become: yes
+  vars:
+    ansible_become_pass: Z$!JpSyp9wcSxP&oNG7CG*THaMKk
+  
   tasks:
     - name: debug env
       ansible.builtin.debug:
