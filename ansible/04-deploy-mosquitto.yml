@@ -7,8 +7,8 @@
     mosquitto_passwd_file: "{{ nfs_mount_point }}/mosquitto-config/passwd"
 
   tasks:
-    # - name: Importer les tâches pour le montage NFS
-    #   ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+    - name: Importer les tâches pour le montage NFS
+      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
 
     - name: Générer le fichier mosquitto depuis le template
       ansible.builtin.template:
@@ -21,11 +21,11 @@
 
     - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
       ansible.builtin.command:
-        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/passwd && chmod 600 /mosquitto/config/passwd"
+        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/passwd && chmod 600 /mosquitto/config/passwd2"
 
     - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
       ansible.builtin.command:
-        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/passwd {{ mosquitto_user }} {{ mosquitto_password }}    
+        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/passwd2 {{ mosquitto_user }} {{ mosquitto_password }}    
             
     - name: Redémarrer le conteneur Docker mosquitto
       ansible.builtin.command:
