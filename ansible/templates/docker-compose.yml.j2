@@ -41,8 +41,8 @@ services:
     image: eclipse-mosquitto:2.0.20
     container_name: mosquitto
     ports:
-      - "1883:1883"
-      - "9001:9001"
+      - 1883:1883
+      - 9001:9001
     volumes:
       - mosquitto-data:/mosquitto/data
       - mosquitto-log:/mosquitto/log
