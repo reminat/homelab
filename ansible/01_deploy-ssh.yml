@@ -4,6 +4,9 @@
     - "group_vars/secret-{{ env }}.yml"
   become: yes
   tasks:
+    - name: debug env
+      ansible.builtin.debug:
+        msg: "{{ env }}"
     - name: show path
       ansible.builtin.debug:
         msg: "{{ playbook_dir }}/{{ env }}-private-key"
