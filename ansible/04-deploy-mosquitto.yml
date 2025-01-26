@@ -19,11 +19,11 @@
 
     - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
       ansible.builtin.command:
-        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/passwd2 && chmod 600 /mosquitto/config/passwd2"
+        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/pwfile && chmod 600 /mosquitto/config/pwfile"
 
     - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
       ansible.builtin.command:
-        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/passwd2 {{ mosquitto_user }} {{ mosquitto_password }}    
+        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/pwfile {{ mosquitto_user }} {{ mosquitto_password }}    
             
     - name: Redémarrer le conteneur Docker mosquitto
       ansible.builtin.command:
