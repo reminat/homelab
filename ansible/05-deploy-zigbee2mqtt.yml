@@ -12,6 +12,7 @@
       ansible.builtin.template:
         src: templates/zigbee2mqtt/configuration.yaml.j2
         dest: "{{ nfs_mount_point }}/z2mqtt-data/configuration.yaml"
+        backup: yes
         owner: root
         group: root
         mode: "0644"

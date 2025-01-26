@@ -12,6 +12,7 @@
       ansible.builtin.template:
         src: templates/homeassistant/configuration.yaml.j2
         dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
+        backup: yes
         owner: root
         group: root
         mode: "0644"

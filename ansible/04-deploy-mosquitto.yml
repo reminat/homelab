@@ -13,7 +13,8 @@
     - name: Générer le fichier mosquitto depuis le template
       ansible.builtin.template:
         src: templates/mosquitto/mosquitto.conf.j2
-        dest: "{{ nfs_mount_point }}/mosquitto-config/configuration.conf"
+        dest: "{{ nfs_mount_point }}/mosquitto-config/mosquitto.conf"
+        backup: yes
         owner: root
         group: root
         mode: "0644"
