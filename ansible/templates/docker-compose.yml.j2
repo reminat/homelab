@@ -49,7 +49,7 @@ services:
       - mosquitto-config:/mosquitto/config
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "1883"]
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$SYS/#", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
       interval: 10s
       timeout: 5s
       retries: 3

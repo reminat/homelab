@@ -12,3 +12,12 @@
         dest: "{{ playbook_dir }}/{{ env }}-private-key"
         owner: "remi"
         mode: "0600"
+        
+    - name: Mettre à jour le cache des paquets
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Installer les clients Mosquitto
+      ansible.builtin.apt:
+        name: mosquitto-clients
+        state: present
