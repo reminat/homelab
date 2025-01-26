@@ -1,20 +1,4 @@
 services:
-  mosquitto:
-    image: eclipse-mosquitto:2.0.18
-    container_name: mosquitto
-    labels:
-      - "app=mosquitto"
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-    volumes:
-      - mosquitto-data:/mosquitto/data
-      - mosquitto-log:/mosquitto/log
-      - mosquitto-config:/mosquitto/config
-    restart: unless-stopped
-    networks:
-      - homelab_network
-
   portainer:
     image: portainer/portainer-ce:2.26.1-alpine
     container_name: portainer
@@ -50,6 +34,20 @@ services:
       - TZ=Europe/Amsterdam
     ports:
       - "1880:1880"
+    networks:
+      - homelab_network
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.20
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - mosquitto-config:/mosquitto/config
+    restart: unless-stopped
     networks:
       - homelab_network
 
