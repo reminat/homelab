@@ -1,4 +1,20 @@
 services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.18
+    container_name: mosquitto
+    labels:
+      - "app=mosquitto"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - mosquitto-config:/mosquitto/config
+    restart: unless-stopped
+    networks:
+      - homelab_network
+
   portainer:
     image: portainer/portainer-ce:2.26.1-alpine
     container_name: portainer
@@ -13,20 +29,7 @@ services:
       - 9443:9443
     networks:
       - homelab_network
-      
-  mosquitto:
-    image: eclipse-mosquitto:2.0.20
-    container_name: mosquitto
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-    volumes:
-      - mosquitto-data:/mosquitto/data
-      - mosquitto-log:/mosquitto/log
-      - mosquitto-config:/mosquitto/config
-    restart: unless-stopped
-    networks:
-      - homelab_network
+
   homeassistant:
     container_name: homeassistant
     image: homeassistant/home-assistant:2025.1
@@ -51,8 +54,20 @@ services:
       - homelab_network
 
 
-
-
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:2.0.0
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - 8082:8080
+    volumes:
+      - z2mqtt-data:/app/data
+      - z2mqtt-udev:/run/udev:ro
+    environment:
+      - TZ=Europe/Paris
+    networks:
+      - homelab_network
 
 networks:
   homelab_network:
