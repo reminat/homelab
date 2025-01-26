@@ -29,7 +29,7 @@ jobs:
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml -l localhost --vault-password-file .vault_pass -e "env=$ENV_NAME"
+          ansible-playbook ansible/01_deploy-ssh.yml -l localhost --vault-password-file .vault_pass -e "env=$ENV_NAME" -vvvv
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
