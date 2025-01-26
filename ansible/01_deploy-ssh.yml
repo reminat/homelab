@@ -5,7 +5,7 @@
   tasks:
     - name: debug env
       ansible.builtin.debug:
-        msg: "{{ env }}"
+        msg: "{{ ansible_become_pass }}"
     - name: show path
       ansible.builtin.debug:
         msg: "{{ playbook_dir }}/{{ env }}-private-key"
