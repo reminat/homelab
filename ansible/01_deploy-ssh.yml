@@ -1,6 +1,6 @@
 - name: Docker deployment
   hosts: localhost
-  become: yes
+  # become: yes
   # vars_files:
   #   - "host_vars/{{ env }}.yml"
   
