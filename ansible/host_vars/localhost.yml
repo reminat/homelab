@@ -1,3 +1,2 @@
-
-
+mavariable: "coucou"
 include_vars: ../secrets/localhost.yml
