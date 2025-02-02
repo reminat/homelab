@@ -1,2 +1,2 @@
 
-include_vars: ../secrets/other.yml
+include_vars: "{{ playbook_dir }}/secrets/other.yml"
