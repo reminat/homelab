@@ -1,10 +1,17 @@
 - name: Docker deployment
   hosts: localhost
-  become: yes
+  # become: yes
   vars_files:
     - "host_vars/{{ env }}.yml"
   
   tasks:
+    - name: display env value
+      debug:
+        msg: "environnment : {{ env }}"
+    - name: display inventory_hostname value
+      debug:
+        msg: "environnment : {{ inventory_hostname }}"
+
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"
@@ -12,11 +19,11 @@
         owner: "remi"
         mode: "0600"
 
-    - name: Mettre à jour le cache des paquets
-      ansible.builtin.apt:
-        update_cache: yes
+    # - name: Mettre à jour le cache des paquets
+    #   ansible.builtin.apt:
+    #     update_cache: yes
 
-    - name: Installer les clients Mosquitto
-      ansible.builtin.apt:
-        name: mosquitto-clients
-        state: present
+    # - name: Installer les clients Mosquitto
+    #   ansible.builtin.apt:
+    #     name: mosquitto-clients
+    #     state: present
