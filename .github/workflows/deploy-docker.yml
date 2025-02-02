@@ -28,7 +28,12 @@ jobs:
           fi
       - name: Fournir le mot de passe Vault localhost
         run: |
-          echo "${{ secrets.VAULT_PASSWORD_LOCALHOST }}" > .vault_pass_localhost;
+          if [ -n "${{ secrets.VAULT_PASSWORD_LOCALHOST }}" ]; then
+            echo "${{ secrets.VAULT_PASSWORD_LOCALHOST }}" > .vault_pass_localhost
+          else
+            echo "VAULT_PASSWORD_LOCALHOST non défini !"
+            exit 1
+          fi
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
