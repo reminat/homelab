@@ -2,12 +2,12 @@
   hosts: localhost
   become: yes
   vars_files:
-    - "host_vars/{{ inventory_hostname }}.yml"
+    - "host_vars/{{ env }}.yml"
   
   tasks:
-    - name: display inventory_hostname value
+    - name: display env value
       debug:
-        msg: "environnment : {{ inventory_hostname }}"
+        msg: "environnment : {{ env }}"
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
