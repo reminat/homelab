@@ -48,14 +48,7 @@ services:
       - mosquitto-log:/mosquitto/log
       - mosquitto-config:/mosquitto/config
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$SYS/#", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    networks:
-      - homelab_network
-
+ 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:2.0.0
     container_name: zigbee2mqtt
@@ -68,9 +61,6 @@ services:
       - z2mqtt-udev:/run/udev:ro
     environment:
       - TZ=Europe/Paris
-    depends_on:
-      mosquitto:
-        condition: service_healthy
     networks:
       - homelab_network
 
@@ -88,5 +78,5 @@ volumes:
     driver_opts:
       type: nfs
       o: "addr={{ ip_nas }},rw"
-      device: ":/volume1/docker-volumes-{{ env }}/{{ volume }}"
+      device: ":/volume1/docker-volumes-{{ inventory_hostname }}/{{ volume }}"
 {% endfor %}

@@ -1,18 +1,10 @@
 - name: Docker deployment
   hosts: localhost
-  vars_files:
-    - "group_vars/secret-{{ env }}.yml"
   become: yes
-  vars:
-    ansible_become_pass: Z$!JpSyp9wcSxP&oNG7CG*THaMKk
+  vars_files:
+    - "host_vars/{{ env }}.yml"
   
   tasks:
-    - name: debug env
-      ansible.builtin.debug:
-        msg: "{{ ansible_become_pass }}"
-    - name: show path
-      ansible.builtin.debug:
-        msg: "{{ playbook_dir }}/{{ env }}-private-key"
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
         content: "{{ ansible_private_key }}"

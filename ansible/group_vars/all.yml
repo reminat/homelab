@@ -1,6 +1,6 @@
 ip_nas: 192.168.1.200
 nfs_server: "{{ ip_nas }}"
-nfs_share: /volume1/docker-volumes-{{ env }}
+nfs_share: /volume1/docker-volumes-{{ inventory_hostname }}
 nfs_mount_point: /mnt/nfs
 docker_volumes:
   - portainer-data

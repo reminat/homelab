@@ -1,7 +1,5 @@
 - name: Docker deployment
   hosts: all
-  vars_files:
-    - "group_vars/secret-{{ env }}.yml"
   become: yes
   roles:
     - role: geerlingguy.docker
