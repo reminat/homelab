@@ -1,8 +1,8 @@
 - name: Docker deployment
   hosts: localhost
   become: yes
-  vars_files:
-    - "host_vars/{{ env }}.yml"
+  # vars_files:
+  #   - "host_vars/{{ env }}.yml"
   
   tasks:
     - name: display env value
