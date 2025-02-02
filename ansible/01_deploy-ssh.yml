@@ -7,7 +7,7 @@
   tasks:
     - name: display env value
       debug:
-        msg: "mavariable : {{ mavariable }}"
+        msg: "mavariable : {{ playbook_dir }}"
 
     # - name: Enregistrer la clé privée
     #   ansible.builtin.copy:
