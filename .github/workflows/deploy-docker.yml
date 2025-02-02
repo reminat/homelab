@@ -26,14 +26,17 @@ jobs:
             echo "Branche non prise en charge pour fournir le mot de passe Vault.";
             exit 1;
           fi
+      - name: Fournir le mot de passe Vault localhost
+        run: |
+          echo "${{ secrets.VAULT_PASSWORD_LOCALHOST }}" > .vault_pass_localhost;
 
       - name: Run ansible playbook (01_deploy-ssh)
         run: |
-          ansible-playbook ansible/01_deploy-ssh.yml -i ansible/inventory.yml --vault-password-file .vault_pass -e "env=$ENV_NAME"
+          ansible-playbook ansible/01_deploy-ssh.yml -i ansible/inventory.yml --vault-id localhost@.vault_pass_localhost
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
+          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-id $ENV_NAME@.vault_pass
 
       - name: Run ansible playbook (03-deploy-homeassistant)
         run: |
@@ -60,4 +63,14 @@ jobs:
             echo "Vault password file has been deleted.";
           else
             echo "No Vault password file found to delete.";
+          fi
+
+      - name: Clean up Vault localhost password file
+        if: always()  
+        run: |
+          if [ -f .vault_pass_localhost ]; then
+            rm .vault_pass_localhost;
+            echo "Localhost Vault password file has been deleted.";
+          else
+            echo "No Localhost Vault password file found to delete.";
           fi
