@@ -1,2 +1,1 @@
-
 include_vars: "{{ playbook_dir }}/secrets/other.yml"
