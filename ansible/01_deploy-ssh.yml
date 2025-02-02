@@ -1,6 +1,6 @@
 - name: Docker deployment
   hosts: localhost
-  become: yes
+  # become: yes
   # vars_files:
   #   - "host_vars/{{ env }}.yml"
   
@@ -9,12 +9,12 @@
       debug:
         msg: "environnment : {{ env }}"
 
-    - name: Enregistrer la clé privée
-      ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
-        dest: "{{ playbook_dir }}/{{ env }}-private-key"
-        owner: "remi"
-        mode: "0600"
+    # - name: Enregistrer la clé privée
+    #   ansible.builtin.copy:
+    #     content: "{{ ansible_private_key }}"
+    #     dest: "{{ playbook_dir }}/{{ env }}-private-key"
+    #     owner: "remi"
+    #     mode: "0600"
 
     # - name: Mettre à jour le cache des paquets
     #   ansible.builtin.apt:
