@@ -1,6 +1,8 @@
 - name: Docker Zigbee2mqtt
   hosts: all
   become: yes
+  vars_files:
+    - "secrets/{{ inventory_hostname }}.yml"
 
   tasks:
     - name: Importer les tâches pour le montage NFS
