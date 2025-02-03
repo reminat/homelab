@@ -21,7 +21,7 @@ jobs:
           if [ "${{ github.ref_name }}" == "main" ]; then
             echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass;
           elif [ "${{ github.ref_name }}" == "develop" ]; then
-            echo "${{ secrets.VAULT_PASSWORD_TEST }}" > .vault;
+            echo "${{ secrets.VAULT_PASSWORD_TEST }}" > .vault_pass;
           else
             echo "Branche non prise en charge pour fournir le mot de passe Vault.";
             exit 1;
