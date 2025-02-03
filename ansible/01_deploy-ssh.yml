@@ -11,7 +11,7 @@
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
-        content: "{{ ansible_private_key }}_{{ env }}"
+        content: "{{ lookup('vars', 'ansible_private_key_' + env) }}"
         dest: "{{ playbook_dir }}/{{ env }}-private-key"
         owner: "remi"
         mode: "0600"
