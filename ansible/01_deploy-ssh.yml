@@ -3,7 +3,6 @@
   become: yes
   vars_files:
     - "secrets/localhost.yml"
-    - "secrets/{{ env }}.yml"
   
   tasks:
     # - name: display env value
@@ -12,7 +11,7 @@
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
+        content: "{{ ansible_private_key }}_{{ env }}"
         dest: "{{ playbook_dir }}/{{ env }}-private-key"
         owner: "remi"
         mode: "0600"
