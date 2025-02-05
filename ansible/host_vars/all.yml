@@ -1,0 +1,1 @@
+env: "{{ group_names | difference(['all']) | first }}"
