@@ -7,9 +7,9 @@
   #   - role: geerlingguy.docker
  
   tasks:
-    # - name: display env value
-    #   debug:
-    #     msg: "diff : {{ ENV_NAME }}"
+    - name: display env value
+      debug:
+        msg: "diff : {{ ENV_NAME }}"
     - name: Afficher toutes les variables disponibles
       debug:
         var:  ansible_become_pass
