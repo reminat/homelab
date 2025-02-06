@@ -9,7 +9,7 @@
   tasks:
     - name: display env value
       debug:
-        msg: "diff : {{ ENV_NAME }}"
+        msg: "diff : {{ env }}"
     - name: Afficher toutes les variables disponibles
       debug:
         var:  ansible_become_pass
