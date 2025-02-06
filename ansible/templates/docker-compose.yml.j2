@@ -47,7 +47,11 @@ services:
       - mosquitto-data:/mosquitto/data
       - mosquitto-log:/mosquitto/log
       - mosquitto-config:/mosquitto/config
-  
+    healthcheck:
+      test: ["CMD", "sudo", "mosquitto_sub", "-h", "localhost", "-t", "'$SYS/#'", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
  
   zigbee2mqtt:
@@ -62,7 +66,7 @@ services:
       - z2mqtt-udev:/run/udev:ro
     environment:
       - TZ=Europe/Paris
-
+  
     networks:
       - homelab_network
 
