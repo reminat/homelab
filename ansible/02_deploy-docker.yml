@@ -1,7 +1,7 @@
 - name: Docker deployment
   hosts: all
   # vars_files:
-    - "secrets/{{ ENV_NAME }}.yml"
+    - "secrets/test.yml"
   become: yes
   roles:
     - role: geerlingguy.docker
@@ -12,8 +12,8 @@
         msg: "diff : {{ group_names | difference(['all']) | first }}"
     - name: Afficher toutes les variables disponibles
       debug:
-        var: hostvars[inventory_hostname]
-    # - name: Importer les tâches pour le montage NFS
+        var:  ENV_NAME
+            # - name: Importer les tâches pour le montage NFS
     #   ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
 
     # - name: Vérifier si Docker Compose est installé
