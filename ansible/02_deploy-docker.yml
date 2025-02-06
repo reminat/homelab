@@ -13,8 +13,6 @@
     - name: Afficher toutes les variables disponibles
       debug:
         var: vars
-    - name: Afficher uniquement les variables définies par l'utilisateur
-    hosts: all
     - name: Filtrer les variables utilisateur
       ansible.builtin.debug:
         msg: "{{ item }}: {{ hostvars[inventory_hostname][item] }}"
