@@ -1,10 +1,10 @@
 - name: Docker deployment
   hosts: all
-  # vars_files:
-  #   - "secrets/{{ env }}.yml"
-  # become: yes
-  # roles:
-  #   - role: geerlingguy.docker
+  vars_files:
+    - "secrets/{{ env }}.yml"
+  become: yes
+  roles:
+    - role: geerlingguy.docker
  
   tasks:
     - name: display envi value
