@@ -41,7 +41,7 @@ jobs:
 
       - name: Run ansible playbook (02_deploy-docker)
         run: |
-          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass -vvvv
+          ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass -v
 
       - name: Run ansible playbook (03-deploy-homeassistant)
         run: |
