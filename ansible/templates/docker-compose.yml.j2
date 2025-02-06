@@ -48,7 +48,7 @@ services:
       - mosquitto-log:/mosquitto/log
       - mosquitto-config:/mosquitto/config
     healthcheck:
-      test: ["CMD", "sudo", "mosquitto_sub", "-h", "localhost", "-t", "'$SYS/#'", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
+      test: ["CMD", "sudo", "mosquitto_sub", "-h", "localhost", "-t", "'\$SYS/#'", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
       interval: 10s
       timeout: 5s
       retries: 3
