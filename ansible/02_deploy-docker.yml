@@ -2,20 +2,20 @@
   hosts: all
   vars_files:
     - "secrets/test.yml"
-  # become: yes
-  # roles:
-  #   - role: geerlingguy.docker
+  become: yes
+  roles:
+    - role: geerlingguy.docker
  
   tasks:
-    - name: display env value
-      debug:
-        msg: "diff : {{ env }}"
+    # - name: display env value
+    #   debug:
+    #     msg: "diff : {{ env }}"
     - name: Afficher toutes les variables disponibles
       debug:
         var:  ansible_become_pass
-    - name: Afficher toutes les variables disponibles
-      debug:
-        var:  vars
+    # - name: Afficher toutes les variables disponibles
+    #   debug:
+    #     var:  vars
             # - name: Importer les tâches pour le montage NFS
     #   ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
 
