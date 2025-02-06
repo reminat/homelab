@@ -2,7 +2,7 @@
   hosts: all
   become: yes
   vars_files:
-    - "secrets/{{ inventory_hostname }}.yml"
+    - "secrets/{{ env }}.yml"
 
   tasks:
     - name: Importer les tâches pour le montage NFS
