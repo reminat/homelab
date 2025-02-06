@@ -1,6 +1,6 @@
 - name: Docker deployment
   hosts: all
-  # vars_files:
+   vars_files:
     - "secrets/{{ ENV_NAME }}.yml"
   become: yes
   roles:
@@ -9,7 +9,7 @@
   tasks:
     - name: display env value
       debug:
-        msg: "diff : {{ group_names | difference(['all']) | first }}"
+        msg: "diff : {{ ENV_NAME }}"
     - name: Afficher toutes les variables disponibles
       debug:
         var:  ENV_NAME
