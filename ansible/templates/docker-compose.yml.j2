@@ -47,11 +47,7 @@ services:
       - mosquitto-data:/mosquitto/data
       - mosquitto-log:/mosquitto/log
       - mosquitto-config:/mosquitto/config
-    healthcheck:
-      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "'#'", "-u", "{{ mosquitto_user }}", "-P", "{{ mosquitto_password }}", "-C", "1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+
     restart: unless-stopped
  
   zigbee2mqtt:
