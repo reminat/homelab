@@ -4,6 +4,8 @@ homeassistant:
 frontend:
   enabled: true
   port: 8082
+  url: https://{{ zigbee2mqtt_auth_url }}.reminat.com
+  auth_token: {{ zigbee2mqtt_auth_token }}
 mqtt:
   base_topic: zigbee2mqtt
   server: {{ mqtt_server }}
