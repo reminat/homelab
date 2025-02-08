@@ -89,9 +89,10 @@
       ansible.builtin.set_fact:
         existing_config: "{{ existing_config['content'] | b64decode | from_yaml }}"
       when: existing_config is defined and existing_config['content'] is defined
+
     - name: Debug de la config existante
       ansible.builtin.debug:
-        var: existing_config
+        var: existing_config.devices
     # - name: Générer le fichier zigbee2mqtt configuration.yaml depuis le template
     #   ansible.builtin.template:
     #     src: templates/zigbee2mqtt/configuration.yaml.j2
