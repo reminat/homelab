@@ -19,7 +19,7 @@ serial:
   baudrate: 115200
   adapter: zstack
 advanced:
-  transmit_power: 20
+  transmit_power: 19
   network_key:
     - 99
     - 141
@@ -47,3 +47,4 @@ advanced:
     - 132
     - 80
     - 105
+{{ zigbee2mqtt_devices | to_nice_yaml }}
