@@ -9,75 +9,75 @@
   tasks:
 
     
-    - name: Importer les tâches pour le montage NFS
-      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+    # - name: Importer les tâches pour le montage NFS
+    #   ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
 
-    - name: Vérifier si Docker Compose est installé
-      ansible.builtin.command:
-        cmd: docker compose version
-      ignore_errors: yes
-      register: docker_compose_installed
+    # - name: Vérifier si Docker Compose est installé
+    #   ansible.builtin.command:
+    #     cmd: docker compose version
+    #   ignore_errors: yes
+    #   register: docker_compose_installed
 
-    - name: Installer Docker Compose v2
-      ansible.builtin.package:
-        name: docker-compose-plugin
-        state: present
-      when: docker_compose_installed.failed
+    # - name: Installer Docker Compose v2
+    #   ansible.builtin.package:
+    #     name: docker-compose-plugin
+    #     state: present
+    #   when: docker_compose_installed.failed
 
-    - name: Créer le répertoire pour docker-compose
-      ansible.builtin.file:
-        path: /opt/docker_app
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
+    # - name: Créer le répertoire pour docker-compose
+    #   ansible.builtin.file:
+    #     path: /opt/docker_app
+    #     state: directory
+    #     owner: root
+    #     group: root
+    #     mode: '0755'
 
-    - name: Générer le fichier docker-compose.yml depuis le template
-      ansible.builtin.template:
-        src: templates/docker-compose.yml.j2
-        dest: /opt/docker_app/docker-compose.yml
-        owner: root
-        group: root
-        mode: "0644"
+    # - name: Générer le fichier docker-compose.yml depuis le template
+    #   ansible.builtin.template:
+    #     src: templates/docker-compose.yml.j2
+    #     dest: /opt/docker_app/docker-compose.yml
+    #     owner: root
+    #     group: root
+    #     mode: "0644"
 
-    - name: Lancer le docker-compose
-      ansible.builtin.command:
-        cmd: docker compose up -d
-        chdir: /opt/docker_app
+    # - name: Lancer le docker-compose
+    #   ansible.builtin.command:
+    #     cmd: docker compose up -d
+    #     chdir: /opt/docker_app
 
-    - name: homeassistant Générer le fichier configuration.yaml depuis le template
-      ansible.builtin.template:
-        src: templates/homeassistant/configuration.yaml.j2
-        dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
-        backup: yes
-        owner: root
-        group: root
-        mode: "0644"
+    # - name: homeassistant Générer le fichier configuration.yaml depuis le template
+    #   ansible.builtin.template:
+    #     src: templates/homeassistant/configuration.yaml.j2
+    #     dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
+    #     backup: yes
+    #     owner: root
+    #     group: root
+    #     mode: "0644"
 
-    - name: Redémarrer le conteneur Docker Home Assistant
-      ansible.builtin.command:
-        cmd: docker restart homeassistant
+    # - name: Redémarrer le conteneur Docker Home Assistant
+    #   ansible.builtin.command:
+    #     cmd: docker restart homeassistant
 
-    - name: Générer le fichier mosquitto depuis le template
-      ansible.builtin.template:
-        src: templates/mosquitto/mosquitto.conf.j2
-        dest: "{{ nfs_mount_point }}/mosquitto-config/mosquitto.conf"
-        backup: yes
-        owner: root
-        group: root
-        mode: "0644"
+    # - name: Générer le fichier mosquitto depuis le template
+    #   ansible.builtin.template:
+    #     src: templates/mosquitto/mosquitto.conf.j2
+    #     dest: "{{ nfs_mount_point }}/mosquitto-config/mosquitto.conf"
+    #     backup: yes
+    #     owner: root
+    #     group: root
+    #     mode: "0644"
 
-    - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
-      ansible.builtin.command:
-        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/pwfile && chmod 600 /mosquitto/config/pwfile"
+    # - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
+    #   ansible.builtin.command:
+    #     cmd: docker exec mosquitto sh -c "touch /mosquitto/config/pwfile && chmod 600 /mosquitto/config/pwfile"
 
-    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
-      ansible.builtin.command:
-        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/pwfile {{ mosquitto_user }} {{ mosquitto_password }}    
+    # - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
+    #   ansible.builtin.command:
+    #     cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/pwfile {{ mosquitto_user }} {{ mosquitto_password }}    
             
-    - name: Redémarrer le conteneur Docker mosquitto
-      ansible.builtin.command:
-        cmd: docker restart mosquitto
+    # - name: Redémarrer le conteneur Docker mosquitto
+    #   ansible.builtin.command:
+    #     cmd: docker restart mosquitto
 
     - name: Charger le fichier de configuration existant
       ansible.builtin.slurp:
