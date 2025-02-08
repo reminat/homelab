@@ -5,9 +5,6 @@
     - "secrets/localhost.yml"
   
   tasks:
-    # - name: display env value
-    #   debug:
-    #     msg: "mavariable : {{ mavariable }}"
 
     - name: Enregistrer la clé privée
       ansible.builtin.copy:

@@ -44,3 +44,50 @@
       ansible.builtin.command:
         cmd: docker compose up -d
         chdir: /opt/docker_app
+
+    - name: homeassistant Générer le fichier configuration.yaml depuis le template
+      ansible.builtin.template:
+        src: templates/homeassistant/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Redémarrer le conteneur Docker Home Assistant
+      ansible.builtin.command:
+        cmd: docker restart homeassistant
+
+    - name: Générer le fichier mosquitto depuis le template
+      ansible.builtin.template:
+        src: templates/mosquitto/mosquitto.conf.j2
+        dest: "{{ nfs_mount_point }}/mosquitto-config/mosquitto.conf"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
+      ansible.builtin.command:
+        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/pwfile && chmod 600 /mosquitto/config/pwfile"
+
+    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
+      ansible.builtin.command:
+        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/pwfile {{ mosquitto_user }} {{ mosquitto_password }}    
+            
+    - name: Redémarrer le conteneur Docker mosquitto
+      ansible.builtin.command:
+        cmd: docker restart mosquitto
+
+    - name: Générer le fichier zigbee2mqtt configuration.yaml depuis le template
+      ansible.builtin.template:
+        src: templates/zigbee2mqtt/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/z2mqtt-data/configuration.yaml"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+        
+    - name: Redémarrer le conteneur Docker zigbee2mqtt
+      ansible.builtin.command:
+        cmd: docker restart zigbee2mqtt
