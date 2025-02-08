@@ -93,7 +93,7 @@
     - name: Debug de la config existante
       ansible.builtin.debug:
         var: existing_config.devices
-        
+
     - name: Générer le fichier zigbee2mqtt configuration.yaml depuis le template
       ansible.builtin.template:
         src: templates/zigbee2mqtt/configuration.yaml.j2

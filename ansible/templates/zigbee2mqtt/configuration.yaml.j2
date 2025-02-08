@@ -24,4 +24,6 @@ advanced:
   ext_pan_id: {{ zigbee2mqtt.ext_pan_id }}
   network_key: {{ zigbee2mqtt.network_key }}
 devices:
-{{ existing_config.devices | to_nice_yaml }}
+  {% if existing_config.devices is defined %}
+  {{ existing_config.devices | to_nice_yaml(indent=2) | indent(2) }}
+  {% endif %}
