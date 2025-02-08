@@ -87,7 +87,7 @@
 
     - name: Convertir la config YAML en JSON
         ansible.builtin.set_fact:
-          : "{{ existing_config['content'] | b64decode | from_yaml }}"
+          existing_config: "{{ existing_config['content'] | b64decode | from_yaml }}"
         when: existing_config is defined and existing_config['content'] is defined
     - name: Debug de la config existante
         ansible.builtin.debug:
