@@ -26,6 +26,6 @@ advanced:
   network_key: 
     {{ zigbee2mqtt.network_key | to_nice_yaml(indent=2) | indent(4) }}
 devices:
-  {% if existing_config.devices is defined %}
-  {{ existing_config.devices | to_nice_yaml }}
-  {% endif %}
+{% if existing_config.devices is defined %}
+{{ existing_config.devices | to_nice_yaml | indent(2) }}
+{% endif %}
