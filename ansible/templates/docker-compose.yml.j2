@@ -47,7 +47,11 @@ services:
       - mosquitto-data:/mosquitto/data
       - mosquitto-log:/mosquitto/log
       - mosquitto-config:/mosquitto/config
-
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-t", "test", "-m", "hello", "-q", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
  
   zigbee2mqtt:
@@ -62,6 +66,9 @@ services:
       - z2mqtt-udev:/run/udev:ro
     environment:
       - TZ=Europe/Paris
+    depends_on:
+      mosquitto:
+        condition: service_healthy
     networks:
       - homelab_network
 
