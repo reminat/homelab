@@ -20,31 +20,7 @@ serial:
   adapter: zstack
 advanced:
   transmit_power: 19
-  network_key:
-    - 99
-    - 141
-    - 95
-    - 24
-    - 154
-    - 30
-    - 39
-    - 73
-    - 192
-    - 38
-    - 179
-    - 97
-    - 191
-    - 70
-    - 176
-    - 157
-  pan_id: 61548
-  ext_pan_id:
-    - 120
-    - 52
-    - 177
-    - 180
-    - 99
-    - 132
-    - 80
-    - 105
+  pan_id: {{ zigbee2mqtt.pan_id }}
+  ext_pan_id: {{ zigbee2mqtt.ext_pan_id }}
+  network_key: {{ zigbee2mqtt.network_key }}
 {{ existing_config.devices | to_nice_yaml }}
