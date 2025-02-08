@@ -20,9 +20,9 @@ serial:
   adapter: zstack
 advanced:
   transmit_power: 19
-  pan_id: {{ zigbee2mqtt.pan_id | to_nice_yaml(indent=2) | indent(2) }}
-  ext_pan_id: {{ zigbee2mqtt.ext_pan_id | to_nice_yaml(indent=2) | indent(2) }}
-  network_key: {{ zigbee2mqtt.network_key | to_nice_yaml(indent=2) | indent(2) }}
+  pan_id: {{ zigbee2mqtt.pan_id | to_nice_yaml(indent=2) }}
+  ext_pan_id: {{ zigbee2mqtt.ext_pan_id | to_nice_yaml(indent=2) }}
+  network_key: {{ zigbee2mqtt.network_key | to_nice_yaml(indent=2) }}
 devices:
   {% if existing_config.devices is defined %}
   {{ existing_config.devices | to_nice_yaml(indent=2) | indent(2) }}
