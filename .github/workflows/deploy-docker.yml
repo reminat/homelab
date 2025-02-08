@@ -43,18 +43,6 @@ jobs:
         run: |
           ansible-playbook ansible/02_deploy-docker.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
 
-      - name: Run ansible playbook (03-deploy-homeassistant)
-        run: |
-          ansible-playbook ansible/03-deploy-homeassistant.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
-
-      - name: Run ansible playbook (04-deploy-mosquitto)
-        run: |
-          ansible-playbook ansible/04-deploy-mosquitto.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
-
-      - name: Run ansible playbook (05-deploy-zigbee2mqtt)
-        run: |
-          ansible-playbook ansible/05-deploy-zigbee2mqtt.yml -i ansible/inventory.yml -l $ENV_NAME --vault-password-file .vault_pass
-
       - name: Clean up (99_cleanup)
         if: always() 
         run: |
