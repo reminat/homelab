@@ -19,7 +19,7 @@ serial:
   baudrate: 115200
   adapter: zstack
 advanced:
-  transmit_power: 20
+  transmit_power: 18
   pan_id: {{ zigbee2mqtt.pan_id }}
   ext_pan_id: 
     {{ zigbee2mqtt.ext_pan_id | to_nice_yaml(indent=2) | indent(4) }}
