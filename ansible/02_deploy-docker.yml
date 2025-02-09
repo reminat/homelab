@@ -110,6 +110,6 @@
         group: root
         mode: "0644"
         
-    - name: Redémarrer le conteneur Docker zigbee2mqtt
+    - name: Redémarrer le conteneur Docker nodered
       ansible.builtin.command:
-        cmd: docker restart zigbee2mqtt
+        cmd: docker restart nodered
