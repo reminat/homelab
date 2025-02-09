@@ -1,29 +1,26 @@
 - name: Docker deployment
   hosts: all
   vars_files:
-    - "group_vars/secret-{{ env }}.yml"
+    - "secrets/{{ env }}.yml"
   become: yes
   roles:
     - role: geerlingguy.docker
+ 
   tasks:
+    - name: Importer les tâches pour le montage NFS
+      ansible.builtin.import_tasks: tasks/mount_nfs_nas_docker.yml
+
     - name: Vérifier si Docker Compose est installé
       ansible.builtin.command:
         cmd: docker compose version
       ignore_errors: yes
       register: docker_compose_installed
+
     - name: Installer Docker Compose v2
       ansible.builtin.package:
         name: docker-compose-plugin
         state: present
       when: docker_compose_installed.failed
-
-    - name: Créer le répertoire pour les volumes docker
-      ansible.builtin.file:
-        path: ~/docker-volumes
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
 
     - name: Créer le répertoire pour docker-compose
       ansible.builtin.file:
@@ -33,15 +30,86 @@
         group: root
         mode: '0755'
 
-    - name: Copier le fichier docker-compose.yml
-      ansible.builtin.copy:
-        src: ../docker/docker-compose.yml
+    - name: Générer le fichier docker-compose.yml depuis le template
+      ansible.builtin.template:
+        src: templates/docker-compose.yml.j2
         dest: /opt/docker_app/docker-compose.yml
         owner: root
         group: root
-        mode: '0644'
-        
+        mode: "0644"
+
     - name: Lancer le docker-compose
       ansible.builtin.command:
         cmd: docker compose up -d
         chdir: /opt/docker_app
+
+    - name: homeassistant Générer le fichier configuration.yaml depuis le template
+      ansible.builtin.template:
+        src: templates/homeassistant/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/homeassistant-config/configuration.yaml"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Redémarrer le conteneur Docker Home Assistant
+      ansible.builtin.command:
+        cmd: docker restart homeassistant
+
+    - name: Générer le fichier mosquitto depuis le template
+      ansible.builtin.template:
+        src: templates/mosquitto/mosquitto.conf.j2
+        dest: "{{ nfs_mount_point }}/mosquitto-config/mosquitto.conf"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Créer le fichier passwd dans le conteneur Mosquitto s'il n'existe pas
+      ansible.builtin.command:
+        cmd: docker exec mosquitto sh -c "touch /mosquitto/config/pwfile && chmod 600 /mosquitto/config/pwfile"
+
+    - name: Ajouter ou mettre à jour le mot de passe utilisateur dans Mosquitto
+      ansible.builtin.command:
+        cmd: docker exec mosquitto mosquitto_passwd -b /mosquitto/config/pwfile {{ mosquitto_user }} {{ mosquitto_password }}    
+            
+    - name: Redémarrer le conteneur Docker mosquitto
+      ansible.builtin.command:
+        cmd: docker restart mosquitto
+
+    - name: Charger le fichier de configuration existant
+      ansible.builtin.slurp:
+        src: "{{ nfs_mount_point }}/z2mqtt-data/configuration.yaml"
+      register: existing_config
+      ignore_errors: yes
+
+    - name: Convertir la config YAML en JSON
+      ansible.builtin.set_fact:
+        existing_config: "{{ existing_config['content'] | b64decode | from_yaml }}"
+      when: existing_config is defined and existing_config['content'] is defined
+
+    - name: Générer le fichier zigbee2mqtt configuration.yaml depuis le template
+      ansible.builtin.template:
+        src: templates/zigbee2mqtt/configuration.yaml.j2
+        dest: "{{ nfs_mount_point }}/z2mqtt-data/configuration.yaml"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+        
+    - name: Redémarrer le conteneur Docker zigbee2mqtt
+      ansible.builtin.command:
+        cmd: docker restart zigbee2mqtt
+
+    - name: Générer le fichier nodered settings.js depuis le template
+      ansible.builtin.template:
+        src: templates/nodered/settings.js.j2
+        dest: "{{ nfs_mount_point }}/nodered-data/settings.js"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+        
+    - name: Redémarrer le conteneur Docker nodered
+      ansible.builtin.command:
+        cmd: docker restart nodered

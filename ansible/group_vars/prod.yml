@@ -1,1 +1,4 @@
-env: prod
+mqtt_server: mqtt://192.168.1.100:1883
+zigbee_bridge: tcp://192.168.1.207:6638
+zigbee2mqtt_auth_token: 05873d266fb7e39a417c0d3e87a21683
+zigbee2mqtt_auth_url: z2mqtt

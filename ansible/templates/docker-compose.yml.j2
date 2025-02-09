@@ -1,0 +1,82 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:2.26.1-alpine
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer-data:/data
+    ports:
+      - 9443:9443
+    networks:
+      - homelab_network
+
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:2025.1
+    volumes:
+      - homeassistant-config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+  
+  node-red:
+    image: nodered/node-red:4.0.8-22
+    container_name: nodered
+    volumes:
+      - nodered-data:/data:rw
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    networks:
+      - homelab_network
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.20
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - mosquitto-config:/mosquitto/config
+    restart: unless-stopped
+ 
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:2.0.0
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - 8082:8082
+    volumes:
+      - z2mqtt-data:/app/data
+      - z2mqtt-udev:/run/udev:ro
+    environment:
+      - TZ=Europe/Paris
+    networks:
+      - homelab_network
+
+networks:
+  homelab_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+{% for volume in docker_volumes %}
+  {{ volume }}:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr={{ ip_nas }},rw"
+      device: ":/volume1/docker-volumes-{{ env }}/{{ volume }}"
+{% endfor %}

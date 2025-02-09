@@ -1,14 +1,23 @@
 - name: Docker deployment
   hosts: localhost
+  become: yes
   vars_files:
-    - "group_vars/secret-{{ env }}.yml"
+    - "secrets/localhost.yml"
+  
   tasks:
-    - name: show path
-      ansible.builtin.debug:
-        msg: "{{ playbook_dir }}/{{ env }}-private-key"
+
     - name: Enregistrer la clé privée
       ansible.builtin.copy:
-        content: "{{ ansible_private_key }}"
+        content: "{{ lookup('vars', 'ansible_private_key_' + env) }}"
         dest: "{{ playbook_dir }}/{{ env }}-private-key"
         owner: "remi"
         mode: "0600"
+
+    - name: Mettre à jour le cache des paquets
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Installer les clients Mosquitto
+      ansible.builtin.apt:
+        name: mosquitto-clients
+        state: present
