@@ -100,3 +100,16 @@
     - name: Redémarrer le conteneur Docker zigbee2mqtt
       ansible.builtin.command:
         cmd: docker restart zigbee2mqtt
+
+    - name: Générer le fichier nodered settings.js depuis le template
+      ansible.builtin.template:
+        src: templates/nodered/settings.js.j2
+        dest: "{{ nfs_mount_point }}/nodered-data/settings.js"
+        backup: yes
+        owner: root
+        group: root
+        mode: "0644"
+        
+    - name: Redémarrer le conteneur Docker zigbee2mqtt
+      ansible.builtin.command:
+        cmd: docker restart zigbee2mqtt
