@@ -9,3 +9,11 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - {{ ip_nas }}
+
+api:
+alexa:
+  smart_home:
+    locale: fr-FR
+    endpoint: https://api.eu.amazonalexa.com/v3/events
+    client_id: amzn1.application-oa2-client.f3ae726beea8418b9c6a426826954ae4
+    client_secret: 2ae5d29f09ec5bd870d008962df24d369848849b729e3032a6d88a2629f1b3ae
