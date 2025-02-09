@@ -8,9 +8,7 @@ frontend:
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - {{ ip_nas }}/24
-    - 192.168.1.1
-    - ::1
+    - {{ ip_nas }}
     
 automation: !include automations.yaml
 script: !include scripts.yaml
