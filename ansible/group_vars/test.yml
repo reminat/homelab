@@ -1,4 +1,4 @@
 mqtt_server: mqtt://192.168.1.102:1883
-zigbee_bridge: tcp://192.168.1.206:6638
+zigbee_bridge: tcp://192.168.1.207:6638
 zigbee2mqtt_auth_token: 5nhNBCNW+KoMKzFyPzBA5p2h6rFM/tp/2FD72N5p4Ok=
 zigbee2mqtt_auth_url: z2mqtt-test
