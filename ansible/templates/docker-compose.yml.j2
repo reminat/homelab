@@ -32,6 +32,7 @@ services:
       - nodered-data:/data:rw
     environment:
       - TZ=Europe/Amsterdam
+      - HA_TOKEN={{ ha_token }}
     ports:
       - "1880:1880"
     networks:
