@@ -47,8 +47,3 @@
     state: directory
     mode: "0755"
   with_items: "{{ docker_volumes }}"
-
-- name: Remonter les partages NFS
-  ansible.builtin.command:
-    cmd: mount -a
-  changed_when: false

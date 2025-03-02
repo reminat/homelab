@@ -113,3 +113,8 @@
     - name: Redémarrer le conteneur Docker nodered
       ansible.builtin.command:
         cmd: docker restart nodered
+  handlers:
+    - name: Remonter les partages NFS
+      ansible.builtin.command:
+        cmd: mount -a
+      changed_when: false
