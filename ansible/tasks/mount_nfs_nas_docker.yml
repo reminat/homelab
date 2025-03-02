@@ -13,6 +13,22 @@
     state: directory
     mode: "0755"
 
+- name: Vérifier si le partage NFS est déjà dans /etc/fstab
+  ansible.builtin.shell:
+    cmd: "grep -q '{{ nfs_mount_point }}' /etc/fstab"
+  register: fstab_check
+  changed_when: false
+  failed_when: fstab_check.rc not in [0, 1]
+
+- name: Ajouter le montage NFS dans /etc/fstab s'il n'est pas déjà présent
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "{{ nfs_server }}:{{ nfs_share }} {{ nfs_mount_point }} nfs defaults,_netdev 0 0"
+    state: present
+    create: yes
+  when: fstab_check.rc != 0
+  notify: Remonter les partages NFS
+
 - name: Vérifier si le partage NFS est monté
   ansible.builtin.shell:
     cmd: "mount | grep '{{ nfs_mount_point }}'"
@@ -31,3 +47,8 @@
     state: directory
     mode: "0755"
   with_items: "{{ docker_volumes }}"
+
+- name: Remonter les partages NFS
+  ansible.builtin.command:
+    cmd: mount -a
+  changed_when: false
