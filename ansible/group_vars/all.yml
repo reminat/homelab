@@ -11,4 +11,7 @@ docker_volumes:
   - mosquitto-config
   - z2mqtt-data
   - z2mqtt-udev
+  - ntfy-cache
+  - ntfy-user
+  - ntfy-data
 env: "{{ group_names | difference(['all']) | first }}"

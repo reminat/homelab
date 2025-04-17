@@ -64,6 +64,22 @@ services:
       - TZ=Europe/Paris
     networks:
       - homelab_network
+  ntfy:
+    image: binwiederhier/ntfy:v2.11.0
+    container_name: ntfy
+    environment:
+      - TZ=Europe/Amsterdam
+    volumes:
+      - ntfy-cache:/var/cache/ntfy
+      - ntfy-user:/var/lib/ntfy/
+      - ntfy-data:/etc/ntfy
+    ports:
+      - "8081:80"
+    command:
+      - serve
+    restart: unless-stopped
+    networks:
+      - homelab_network
 
 networks:
   homelab_network:
