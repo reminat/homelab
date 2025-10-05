@@ -80,6 +80,21 @@ services:
     restart: unless-stopped
     networks:
       - homelab_network
+      
+  postgres:
+    image: postgres:18.0-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: {{ postgres_password }}
+      POSTGRES_USER: remi
+      POSTGRES_DB: hegemony
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - homelab_network
 
 networks:
   homelab_network:
