@@ -14,4 +14,5 @@ docker_volumes:
   - ntfy-cache
   - ntfy-user
   - ntfy-data
+  - postgres-data
 env: "{{ group_names | difference(['all']) | first }}"
